@@ -1,0 +1,70 @@
+
+CREATE TABLE Student (
+    StudentID INT PRIMARY KEY,
+    Fname VARCHAR(50) NOT NULL,
+    Lname VARCHAR(50) NOT NULL,
+    email VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE Program (
+    ProgramID INT PRIMARY KEY,
+    PNAME VARCHAR(50) NOT NULL,
+    TotalCreditRequired INT NOT NULL,
+    YearCommenced YEAR NOT NULL
+);
+
+
+CREATE TABLE Enrollement (
+    EnrollementID INT PRIMARY KEY,
+    TotalCredCompleted INT NOT NULL,
+    STATUS VARCHAR(20) NOT NULL
+);
+
+
+CREATE TABLE Student_Enrollement (
+    SID INT,
+    PID INT,
+    EID INT,
+    PRIMARY KEY(SID, PID, EID),
+    FOREIGN KEY(SID) REFERENCES Student(StudentID),
+    FOREIGN KEY(PID) REFERENCES Program(ProgramID),
+    FOREIGN KEY(EID) REFERENCES Enrollement(EnrollementID)
+);
+
+
+CREATE TABLE Instructor (
+    InstructorID INT PRIMARY KEY,
+    Fname VARCHAR(50) NOT NULL,
+    Lname VARCHAR(50) NOT NULL,
+    Role VARCHAR(50) NOT NULL,
+    Contact_Email VARCHAR(50) NOT NULL
+);
+
+
+CREATE TABLE Course (
+    CourseID INT,
+    CPID INT,
+    CourseName VARCHAR(255) NOT NULL,
+    CreditPoints INT NOT NULL,
+    TYPE VARCHAR(20) NOT NULL,
+    INSTRID INT,
+    PRIMARY KEY(CourseID, CPID),
+    FOREIGN KEY(CPID) REFERENCES Program(ProgramID),
+    FOREIGN KEY(INSTRID) REFERENCES Instructor(InstructorID)
+);
+
+
+CREATE TABLE StudentAttempt (
+    TSID INT,
+    TPID INT,
+    TCID INT,
+    YEAR YEAR NOT NULL,
+    Semester VARCHAR(50) NOT NULL,
+    Mark INT NOT NULL,
+    Grade CHAR(2) NOT NULL,
+    PRIMARY KEY(TSID, TPID, TCID),
+    FOREIGN KEY(TSID) REFERENCES Student(StudentID),
+    FOREIGN KEY(TPID) REFERENCES Program(ProgramID), 
+    FOREIGN KEY(TCID) REFERENCES Course(CourseID)    
+);
